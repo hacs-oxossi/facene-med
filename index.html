@@ -3,21 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f9fafb" id="theme-color-meta" />
   <title>Cálculo de Média Ponderada - Módulos Acadêmicos</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f9fafb; color: #111; margin: 40px; }
-    h1, h2, h3 { color: #1f2937; }
-    .modulo { background: #e0f2fe; border-radius: 10px; padding: 20px; margin-bottom: 30px; }
-    .unidade { background: #fff; padding: 15px; border-radius: 8px; margin-top: 10px; }
-    input { width: 80px; margin-left: 5px; }
-    button { margin-top: 10px; background: #2563eb; color: #fff; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #1d4ed8; }
-    .resultado { margin-top: 10px; font-weight: bold; color: #047857; }
-    .mensagem { color: #b45309; }
+    :root {
+      --bg: #f9fafb;
+      --fg: #111827;
+      --primary: #2563eb;
+      --primary-700: #1d4ed8;
+      --card: #ffffff;
+      --mod: #e0f2fe;
+      --index: #dbeafe;
+      --ok: #047857;
+      --warn: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      margin: 20px auto;
+      max-width: 900px;
+      padding: 0 10px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    h1, h2, h3 { text-align: center; }
+    .toggle-theme {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .toggle-theme button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .toggle-theme button:hover { background: var(--primary-700); }
+    .indice { background: var(--index); padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+    .indice a { display: inline-block; color: var(--primary-700); text-decoration: none; margin: 5px 10px; }
+    .modulo { background: var(--mod); border-radius: 10px; padding: 20px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .unidade { background: var(--card); border-radius: 8px; padding: 15px; margin-top: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+    label { display: flex; flex-direction: column; font-size: clamp(0.9rem, 2vw, 1rem); margin-bottom: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 4px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1rem; }
+    button.calc-btn { background-color: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 1rem; }
+    button.calc-btn:hover { background-color: var(--primary-700); }
+    .resultado { font-weight: bold; margin-top: 8px; color: var(--ok); text-align: center; }
+    .mensagem { color: var(--warn); text-align: center; font-size: clamp(0.85rem, 2vw, 1rem); }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      body { margin: 10px; padding: 0 5px; }
+      .modulo { padding: 15px; }
+      .unidade { padding: 10px; }
+      input, button.calc-btn { font-size: 0.95rem; }
+      .indice a { display: block; margin: 6px 0; }
+    }
+
+    /* Modo escuro */
+    body.dark {
+      --bg: #0b1220;
+      --fg: #e5e7eb;
+      --primary: #3b82f6;
+      --primary-700: #60a5fa;
+      --card: #0f172a;
+      --mod: #0b2540;
+      --index: #0b2540;
+      --ok: #34d399;
+      --warn: #f59e0b;
+    }
   </style>
 </head>
 <body>
   <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
+  <div class="toggle-theme">
+    <button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button>
+  </div>
+
+  <div class="indice">
+    <a href="#urgencia">Urgência e Emergência</a>
+    <a href="#processos">Processos Terapêuticos I</a>
+    <a href="#semiologia">Semiologia Médica I</a>
+  </div>
 
   <div id="urgencia" class="modulo">
     <h2>Fundamentos da Urgência e Emergência</h2>
@@ -36,7 +105,7 @@
       <label>4ª Avaliação Integrada (Peso 5): <input type="number" class="avaliacao-integrada" id="fu_u4_av1" value="0" min="0" max="10" step="0.1"></label>
       <label>Atividades Processuais (Peso 5): <input type="number" id="fu_u4_proc" value="0" min="0" max="10" step="0.1"></label>
     </div>
-    <button onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
+    <button class="calc-btn" onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
     <div class="resultado" id="fu_final"></div>
     <div class="resultado mensagem" id="fu_mensagem"></div>
   </div>
@@ -95,7 +164,33 @@
         document.querySelectorAll('.teste-progresso').forEach(i => i.value = val);
       });
     });
+
+    // Alternância manual de modo claro/escuro
+    const toggleButton = document.getElementById('theme-toggle');
+    const metaTheme = document.getElementById('theme-color-meta');
+
+    function applyTheme(dark) {
+      if (dark) {
+        document.body.classList.add('dark');
+        metaTheme.setAttribute('content', '#0b1220');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark');
+        metaTheme.setAttribute('content', '#f9fafb');
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Detecta preferência do sistema e estado salvo
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) applyTheme(savedTheme === 'dark');
+    else applyTheme(systemDark);
+
+    toggleButton.addEventListener('click', () => {
+      const dark = !document.body.classList.contains('dark');
+      applyTheme(dark);
+    });
   </script>
 </body>
 </html>
-<!-- Substitua este arquivo pelo seu código HTML do projeto -->
