@@ -9,14 +9,186 @@
 </head>
 <body>
   <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
-  <div class="toggle-theme"><button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button></div>
+  <div class="toggle-theme">
+    <button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button>
+  </div>
+
   <nav class="indice">
     <a href="#urgencia">Urgência e Emergência</a>
     <a href="#processos">Processos Terapêuticos I</a>
     <a href="#semiologia">Semiologia Médica I</a>
   </nav>
 
-  <!-- TODO: (Seu conteúdo dos módulos aqui — o mesmo das versões anteriores do site) -->
+  <!-- MÓDULO 1 -->
+  <section id="urgencia" class="modulo">
+    <h2>Fundamentos da Urgência e Emergência</h2>
+
+    <div class="unidade"><h3>Unidade I</h3>
+      <div class="grid">
+        <label>1ª Avaliação Teórica (Peso 9)
+          <input type="number" id="fu_u1_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="fu_u1_tp" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade II</h3>
+      <div class="grid">
+        <label>2ª Avaliação Teórica (Peso 1)
+          <input type="number" id="fu_u2_av1" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade III</h3>
+      <div class="grid">
+        <label>3ª Avaliação OSPE (Peso 8)
+          <input type="number" id="fu_u3_ospe" min="0" max="10" step="0.1">
+        </label>
+        <label>Atividades Processuais (Peso 2)
+          <input type="number" id="fu_u3_proc" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade IV</h3>
+      <div class="grid">
+        <label>4ª Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="fu_u4_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Atividades Processuais (Peso 5)
+          <input type="number" id="fu_u4_proc" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
+      <button class="clear-btn" onclick="limparModulo('urgencia')">Limpar módulo</button>
+    </div>
+    <div class="resultado final" id="fu_final"></div>
+    <div class="resultado mensagem warn" id="fu_mensagem"></div>
+  </section>
+
+  <!-- MÓDULO 2 -->
+  <section id="processos" class="modulo">
+    <h2>Processos Terapêuticos I</h2>
+
+    <div class="unidade"><h3>Unidade I</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 9)
+          <input type="number" id="pt_u1_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="pt_u1_tp" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade II</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 8)
+          <input type="number" id="pt_u2_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Seminários (Peso 2)
+          <input type="number" id="pt_u2_sem" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade III</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 8)
+          <input type="number" id="pt_u3_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Seminários (Peso 2)
+          <input type="number" id="pt_u3_sem" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade IV</h3>
+      <div class="grid">
+        <label>Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="pt_u4_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Atividades Processuais (Peso 5)
+          <input type="number" id="pt_u4_proc" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('processos')">Calcular média Processos Terapêuticos I</button>
+      <button class="clear-btn" onclick="limparModulo('processos')">Limpar módulo</button>
+    </div>
+    <div class="resultado final" id="pt_final"></div>
+    <div class="resultado mensagem warn" id="pt_mensagem"></div>
+  </section>
+
+  <!-- MÓDULO 3 -->
+  <section id="semiologia" class="modulo">
+    <h2>Semiologia Médica dos Sistemas I</h2>
+
+    <div class="unidade"><h3>Unidade I</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (ANM e ECTO) (Peso 7)
+          <input type="number" id="sm_u1_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Seminário Laboratório (Peso 2)
+          <input type="number" id="sm_u1_sem" min="0" max="10" step="0.1">
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="sm_u1_tp" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade II</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (AR e ACV) (Peso 7)
+          <input type="number" id="sm_u2_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Avaliação Prática Anamnese (Peso 3)
+          <input type="number" id="sm_u2_prat" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade III</h3>
+      <div class="grid">
+        <label>Avaliação Teórica (ABD e UR) (Peso 7)
+          <input type="number" id="sm_u3_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Práticas Supervisionadas (Peso 1)
+          <input type="number" id="sm_u3_prat" min="0" max="10" step="0.1">
+        </label>
+        <label>Seminário Semiologia (Peso 2)
+          <input type="number" id="sm_u3_sem" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade"><h3>Unidade IV</h3>
+      <div class="grid">
+        <label>Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="sm_u4_av1" min="0" max="10" step="0.1">
+        </label>
+        <label>Avaliação Prática OSCE (Peso 5)
+          <input type="number" id="sm_u4_osce" min="0" max="10" step="0.1">
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('semiologia')">Calcular média Semiologia Médica I</button>
+      <button class="clear-btn" onclick="limparModulo('semiologia')">Limpar módulo</button>
+    </div>
+    <div class="resultado final" id="sm_final"></div>
+    <div class="resultado mensagem warn" id="sm_mensagem"></div>
+  </section>
 
   <script src="script.js"></script>
 </body>
