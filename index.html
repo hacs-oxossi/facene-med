@@ -1,65 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f9fafb" id="theme-color-meta" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f9fafb" id="theme-color-meta">
   <title>Cálculo de Média Ponderada - Módulos Acadêmicos</title>
-  <style>
-    :root {
-      --bg:#f9fafb;--fg:#111827;--primary:#2563eb;--primary-700:#1d4ed8;
-      --card:#ffffff;--mod:#e0f2fe;--index:#dbeafe;--ok:#10b981;--warn:#f59e0b;
-    }
-    *{box-sizing:border-box}
-    body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--fg);
-      margin:20px auto;max-width:1000px;padding:0 10px;transition:background .3s,color .3s;}
-    h1,h2,h3{text-align:center;}h3{margin:6px 0 10px;font-size:clamp(1rem,2.4vw,1.15rem);}
-    .toggle-theme{display:flex;justify-content:center;margin-bottom:12px;}
-    .toggle-theme button{background:var(--primary);color:#fff;border:0;padding:8px 14px;border-radius:6px;cursor:pointer;}
-    .toggle-theme button:hover{background:var(--primary-700);}
-    .indice{background:var(--index);padding:10px;border-radius:8px;margin-bottom:16px;text-align:center;}
-    .indice a{display:inline-block;color:var(--primary-700);text-decoration:none;margin:4px 8px;font-weight:600;}
-    .modulo{background:var(--mod);border-radius:10px;padding:18px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-    .unidade{background:var(--card);border-radius:8px;padding:12px;margin-top:10px;box-shadow:0 1px 6px rgba(0,0,0,0.05);}
-    .unidade header{text-align:left;font-weight:700;}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;}
-    label{display:flex;flex-direction:column;font-size:clamp(.9rem,2vw,1rem);}
-    input{width:100%;padding:8px;margin-top:4px;border-radius:6px;border:1px solid #cbd5e1;font-size:1rem;}
-    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-    button.calc-btn,button.clear-btn{background-color:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;width:100%;font-size:1rem;}
-    button.clear-btn{background-color:#6b7280;}button.calc-btn:hover{background-color:var(--primary-700);}button.clear-btn:hover{background-color:#4b5563;}
-    .resultado{font-weight:700;margin-top:8px;text-align:center;}
-    .mensagem{text-align:center;font-size:clamp(.85rem,2vw,1rem);} .mensagem.warn{color:var(--warn);} .mensagem.ok{color:var(--ok);} .final{color:var(--ok);}
-    @media(max-width:768px){body{margin:10px;padding:0 5px;}.modulo{padding:14px;}.unidade{padding:10px;}.grid{grid-template-columns:1fr;}.actions{grid-template-columns:1fr;}.indice a{display:block;margin:6px 0;}}
-    body.dark{--bg:#0b1220;--fg:#e5e7eb;--primary:#3b82f6;--primary-700:#60a5fa;--card:#0f172a;--mod:#0b2540;--index:#0b2540;--ok:#34d399;--warn:#f59e0b;}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
   <div class="toggle-theme"><button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button></div>
-  <nav class="indice"><a href="#urgencia">Urgência e Emergência</a><a href="#processos">Processos Terapêuticos I</a><a href="#semiologia">Semiologia Médica I</a></nav>
+  <nav class="indice">
+    <a href="#urgencia">Urgência e Emergência</a>
+    <a href="#processos">Processos Terapêuticos I</a>
+    <a href="#semiologia">Semiologia Médica I</a>
+  </nav>
 
-  <section id="urgencia" class="modulo"><h2>Fundamentos da Urgência e Emergência</h2>
-    <div class="unidade"><header><h3>Unidade I</h3></header>
-      <div class="grid"><label>1ª Avaliação Teórica (Peso 9)<input id="fu_u1_av1" type="number" min="0" max="10" step="0.1"></label>
-      <label>Teste de Progresso (Peso 1)<input class="teste-progresso" id="fu_u1_tp" type="number" min="0" max="10" step="0.1"></label></div></div>
-    <div class="unidade"><header><h3>Unidade II</h3></header>
-      <label>2ª Avaliação Teórica (Peso 1)<input id="fu_u2_av1" type="number" min="0" max="10" step="0.1"></label></div>
-    <div class="unidade"><header><h3>Unidade III</h3></header>
-      <div class="grid"><label>3ª Avaliação OSPE (Peso 8)<input id="fu_u3_ospe" type="number" min="0" max="10" step="0.1"></label>
-      <label>Atividades Processuais (Peso 2)<input id="fu_u3_proc" type="number" min="0" max="10" step="0.1"></label></div></div>
-    <div class="unidade"><header><h3>Unidade IV</h3></header>
-      <div class="grid"><label>4ª Avaliação Integrada (Peso 5)<input class="avaliacao-integrada" id="fu_u4_av1" type="number" min="0" max="10" step="0.1"></label>
-      <label>Atividades Processuais (Peso 5)<input id="fu_u4_proc" type="number" min="0" max="10" step="0.1"></label></div></div>
-    <div class="actions"><button class="calc-btn" onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
-    <button class="clear-btn" onclick="limparModulo('urgencia')">Limpar notas do módulo</button></div>
-    <div class="resultado final" id="fu_final"></div><div class="resultado mensagem warn" id="fu_mensagem"></div></section>
+  <!-- TODO: (Seu conteúdo dos módulos aqui — o mesmo das versões anteriores do site) -->
 
-  <script>
-    function byId(id){return document.getElementById(id);}
-    function mediaPonderada(vps){let sp=0,sw=0;for(const vp of vps){if(vp.valor!==''&&!isNaN(vp.valor)){sp+=Number(vp.valor)*vp.peso;sw+=vp.peso;}}return sw?sp/sw:0;}
-    function resumoAprovacao(unidades){let sum=0,filled=0;for(const u of unidades){if(u!==''&&!isNaN(u)){sum+=Number(u);filled++;}}const target=28;const restantes=4-filled;const mediaParcial=filled?sum/filled:0;const aprovado=sum>=target;const faltam=Math.max(0,target-sum);return{mediaParcial,faltam,restantes,aprovado,filled};}
-    function setMsgClass(el,ok){el.classList.remove('warn','ok');el.classList.add(ok?'ok':'warn');}
-    function calcularModulo(prefix,titulo,unidades){const finalEl=byId(prefix+'_final');const msgEl=byId(prefix+'_mensagem');const{mediaParcial,faltam,restantes,aprovado,filled}=resumoAprovacao(unidades);if(filled<4){finalEl.innerText='';if(aprovado){setMsgClass(msgEl,true);msgEl.innerText=`Média parcial: ${mediaParcial.toFixed(2)} | Matematicamente aprovado ✅. Ainda restam ${restantes} nota(s) a lançar.`;}else{setMsgClass(msgEl,false);msgEl.innerText=`Média parcial: ${mediaParcial.toFixed(2)} | Faltam ${faltam.toFixed(2)} pontos para aprovação. Ainda restam ${restantes} nota(s) a lançar.`;}}else{msgEl.innerText='';finalEl.innerText=`Média Final ${titulo}: ${mediaParcial.toFixed(2)}`;}}
-  </script>
-</body></html>
+  <script src="script.js"></script>
+</body>
+</html>
