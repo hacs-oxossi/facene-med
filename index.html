@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cálculo de Média Ponderada - Módulos Acadêmicos</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9fafb; color: #111; margin: 40px; }
+    h1, h2, h3 { color: #1f2937; }
+    .modulo { background: #e0f2fe; border-radius: 10px; padding: 20px; margin-bottom: 30px; }
+    .unidade { background: #fff; padding: 15px; border-radius: 8px; margin-top: 10px; }
+    input { width: 80px; margin-left: 5px; }
+    button { margin-top: 10px; background: #2563eb; color: #fff; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .resultado { margin-top: 10px; font-weight: bold; color: #047857; }
+    .mensagem { color: #b45309; }
+  </style>
+</head>
+<body>
+  <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
+
+  <div id="urgencia" class="modulo">
+    <h2>Fundamentos da Urgência e Emergência</h2>
+    <div class="unidade">
+      <label>1ª Avaliação Teórica (Peso 9): <input type="number" id="fu_u1_av1" value="0" min="0" max="10" step="0.1"></label>
+      <label>Teste de Progresso (Peso 1): <input type="number" class="teste-progresso" id="fu_u1_tp" value="0" min="0" max="10" step="0.1"></label>
+    </div>
+    <div class="unidade">
+      <label>2ª Avaliação Teórica (Peso 1): <input type="number" id="fu_u2_av1" value="0" min="0" max="10" step="0.1"></label>
+    </div>
+    <div class="unidade">
+      <label>3ª Avaliação OSPE (Peso 8): <input type="number" id="fu_u3_ospe" value="0" min="0" max="10" step="0.1"></label>
+      <label>Atividades Processuais (Peso 2): <input type="number" id="fu_u3_proc" value="0" min="0" max="10" step="0.1"></label>
+    </div>
+    <div class="unidade">
+      <label>4ª Avaliação Integrada (Peso 5): <input type="number" class="avaliacao-integrada" id="fu_u4_av1" value="0" min="0" max="10" step="0.1"></label>
+      <label>Atividades Processuais (Peso 5): <input type="number" id="fu_u4_proc" value="0" min="0" max="10" step="0.1"></label>
+    </div>
+    <button onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
+    <div class="resultado" id="fu_final"></div>
+    <div class="resultado mensagem" id="fu_mensagem"></div>
+  </div>
+
+  <script>
+    function byId(id) { return document.getElementById(id); }
+
+    function mediaPonderada(valoresPesos) {
+      let somaPonderada = 0, somaPesos = 0;
+      for (const vp of valoresPesos) {
+        const v = Number(vp.valor);
+        somaPonderada += v * vp.peso;
+        somaPesos += vp.peso;
+      }
+      return somaPesos ? somaPonderada / somaPesos : 0;
+    }
+
+    function calcularModulo(prefix, nome, unidades) {
+      const final = byId(prefix + '_final');
+      const mensagem = byId(prefix + '_mensagem');
+      const soma = unidades.reduce((a, b) => a + b, 0);
+      const preenchidas = unidades.filter(u => !isNaN(u)).length;
+      const mediaFinal = soma / 4;
+      if (preenchidas < 4 || mediaFinal === 0) {
+        const pontosNec = 7 * 4 - soma;
+        const restam = 4 - preenchidas;
+        final.innerText = '';
+        mensagem.innerText = `Média parcial: ${mediaFinal.toFixed(2)} | Faltam ${pontosNec.toFixed(2)} pontos para aprovação. Ainda restam ${restam} unidade(s) a avaliar.`;
+      } else {
+        mensagem.innerText = '';
+        final.innerText = `${nome}: ${mediaFinal.toFixed(2)}`;
+      }
+    }
+
+    function calcular(modulo) {
+      if (modulo === 'urgencia') {
+        const fu_u1 = mediaPonderada([{valor:+fu_u1_av1.value, peso:9},{valor:+fu_u1_tp.value,peso:1}]);
+        const fu_u2 = +fu_u2_av1.value;
+        const fu_u3 = mediaPonderada([{valor:+fu_u3_ospe.value,peso:8},{valor:+fu_u3_proc.value,peso:2}]);
+        const fu_u4 = mediaPonderada([{valor:+fu_u4_av1.value,peso:5},{valor:+fu_u4_proc.value,peso:5}]);
+        calcularModulo('fu','Média Final Urgência e Emergência',[fu_u1,fu_u2,fu_u3,fu_u4]);
+      }
+    }
+
+    // Sincronização de campos entre módulos
+    document.querySelectorAll('.avaliacao-integrada').forEach(el => {
+      el.addEventListener('input', e => {
+        const val = e.target.value;
+        document.querySelectorAll('.avaliacao-integrada').forEach(i => i.value = val);
+      });
+    });
+
+    document.querySelectorAll('.teste-progresso').forEach(el => {
+      el.addEventListener('input', e => {
+        const val = e.target.value;
+        document.querySelectorAll('.teste-progresso').forEach(i => i.value = val);
+      });
+    });
+  </script>
+</body>
+</html>
 <!-- Substitua este arquivo pelo seu código HTML do projeto -->
