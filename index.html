@@ -1,25 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f9fafb" id="theme-color-meta">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f9fafb" id="theme-color-meta" />
   <title>Cálculo de Média Ponderada - Módulos Acadêmicos</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg:#f0f6ff; --fg:#111827; --primary:#2563eb; --primary-700:#1d4ed8;
+      --card:#ffffff; --mod:#e0f2fe; --index:#dbeafe; --ok:#10b981; --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--fg);
+      margin:20px auto;max-width:1000px;padding:0 10px;transition:background .3s,color .3s;}
+    h1,h2,h3{text-align:center;}h3{margin:6px 0 10px;font-size:clamp(1rem,2.4vw,1.15rem);} 
+
+    .toggle-theme{display:flex;justify-content:center;margin-bottom:12px;}
+    .toggle-theme button{background:var(--primary);color:#fff;border:0;padding:8px 14px;border-radius:6px;cursor:pointer;}
+    .toggle-theme button:hover{background:var(--primary-700);} 
+
+    .indice{background:var(--index);padding:10px;border-radius:8px;margin-bottom:16px;text-align:center;}
+    .indice a{display:inline-block;color:var(--primary-700);text-decoration:none;margin:4px 8px;font-weight:600;}
+
+    .modulo{background:var(--mod);border-radius:10px;padding:18px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,0.05);} 
+    .unidade{background:var(--card);border-radius:8px;padding:12px;margin-top:10px;box-shadow:0 1px 6px rgba(0,0,0,0.05);} 
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;}
+    label{display:flex;flex-direction:column;font-size:clamp(.9rem,2vw,1rem);} 
+    input{width:100%;padding:8px;margin-top:4px;border-radius:6px;border:1px solid #cbd5e1;font-size:1rem;} 
+
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+    button.calc-btn,button.clear-btn{background-color:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;width:100%;font-size:1rem;} 
+    button.clear-btn{background-color:#6b7280;} 
+    button.calc-btn:hover{background-color:var(--primary-700);} 
+    button.clear-btn:hover{background-color:#4b5563;} 
+
+    .resultado{font-weight:700;margin-top:8px;text-align:center;}
+    .mensagem{text-align:center;font-size:clamp(.85rem,2vw,1rem);} 
+    .mensagem.warn{color:var(--warn);} .mensagem.ok{color:var(--ok);} .final{color:var(--ok);} 
+
+    @media(max-width:768px){
+      body{margin:10px;padding:0 5px;} .modulo{padding:14px;} .unidade{padding:10px;}
+      .grid{grid-template-columns:1fr;} .actions{grid-template-columns:1fr;} .indice a{display:block;margin:6px 0;}
+    }
+
+    body.dark{--bg:#0b1220;--fg:#e5e7eb;--primary:#3b82f6;--primary-700:#60a5fa;--card:#0f172a;--mod:#0b2540;--index:#0b2540;--ok:#34d399;--warn:#f59e0b;}
+  </style>
 </head>
 <body>
   <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
-  <div class="toggle-theme">
-    <button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button>
-  </div>
+  <div class="toggle-theme"><button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button></div>
 
+  <!-- Índice -->
   <nav class="indice">
     <a href="#urgencia">Urgência e Emergência</a>
     <a href="#processos">Processos Terapêuticos I</a>
     <a href="#semiologia">Semiologia Médica I</a>
   </nav>
 
-  <!-- MÓDULO 1 -->
+  <!-- MÓDULO 1: URGÊNCIA E EMERGÊNCIA -->
   <section id="urgencia" class="modulo">
     <h2>Fundamentos da Urgência e Emergência</h2>
 
@@ -72,7 +110,7 @@
     <div class="resultado mensagem warn" id="fu_mensagem"></div>
   </section>
 
-  <!-- MÓDULO 2 -->
+  <!-- MÓDULO 2: PROCESSOS TERAPÊUTICOS I -->
   <section id="processos" class="modulo">
     <h2>Processos Terapêuticos I</h2>
 
@@ -128,7 +166,7 @@
     <div class="resultado mensagem warn" id="pt_mensagem"></div>
   </section>
 
-  <!-- MÓDULO 3 -->
+  <!-- MÓDULO 3: SEMIOLOGIA MÉDICA I -->
   <section id="semiologia" class="modulo">
     <h2>Semiologia Médica dos Sistemas I</h2>
 
@@ -190,6 +228,6 @@
     <div class="resultado mensagem warn" id="sm_mensagem"></div>
   </section>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
