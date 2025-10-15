@@ -23,46 +23,42 @@
       background: var(--bg);
       color: var(--fg);
       margin: 20px auto;
-      max-width: 900px;
+      max-width: 1000px;
       padding: 0 10px;
       transition: background 0.3s ease, color 0.3s ease;
     }
     h1, h2, h3 { text-align: center; }
-    .toggle-theme {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-    .toggle-theme button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+    h3 { margin: 6px 0 10px; font-size: clamp(1rem, 2.4vw, 1.15rem); }
+    .toggle-theme { display: flex; justify-content: center; margin-bottom: 12px; }
+    .toggle-theme button { background: var(--primary); color: #fff; border: 0; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
     .toggle-theme button:hover { background: var(--primary-700); }
-    .indice { background: var(--index); padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
-    .indice a { display: inline-block; color: var(--primary-700); text-decoration: none; margin: 5px 10px; }
-    .modulo { background: var(--mod); border-radius: 10px; padding: 20px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .unidade { background: var(--card); border-radius: 8px; padding: 15px; margin-top: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
-    label { display: flex; flex-direction: column; font-size: clamp(0.9rem, 2vw, 1rem); margin-bottom: 10px; }
+    .indice { background: var(--index); padding: 10px; border-radius: 8px; margin-bottom: 16px; text-align: center; }
+    .indice a { display: inline-block; color: var(--primary-700); text-decoration: none; margin: 4px 8px; font-weight: 600; }
+    .modulo { background: var(--mod); border-radius: 10px; padding: 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .unidade { background: var(--card); border-radius: 8px; padding: 12px; margin-top: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+    .unidade header { text-align: left; font-weight: 700; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+    label { display: flex; flex-direction: column; font-size: clamp(0.9rem, 2vw, 1rem); }
     input { width: 100%; padding: 8px; margin-top: 4px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1rem; }
-    button.calc-btn { background-color: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 1rem; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    button.calc-btn, button.clear-btn { background-color: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1rem; }
+    button.clear-btn { background-color: #6b7280; }
     button.calc-btn:hover { background-color: var(--primary-700); }
+    button.clear-btn:hover { background-color: #4b5563; }
     .resultado { font-weight: bold; margin-top: 8px; color: var(--ok); text-align: center; }
     .mensagem { color: var(--warn); text-align: center; font-size: clamp(0.85rem, 2vw, 1rem); }
 
     /* Responsividade */
     @media (max-width: 768px) {
       body { margin: 10px; padding: 0 5px; }
-      .modulo { padding: 15px; }
+      .modulo { padding: 14px; }
       .unidade { padding: 10px; }
-      input, button.calc-btn { font-size: 0.95rem; }
+      .grid { grid-template-columns: 1fr; }
+      .actions { grid-template-columns: 1fr; }
       .indice a { display: block; margin: 6px 0; }
     }
 
-    /* Modo escuro */
+    /* Modo escuro manual */
     body.dark {
       --bg: #0b1220;
       --fg: #e5e7eb;
@@ -78,119 +74,306 @@
 </head>
 <body>
   <h1>Cálculo de Média Ponderada - Módulos Acadêmicos</h1>
-  <div class="toggle-theme">
-    <button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button>
-  </div>
+  <div class="toggle-theme"><button id="theme-toggle">🌞 Alternar Modo Claro/Escuro 🌙</button></div>
 
-  <div class="indice">
+  <!-- Índice -->
+  <nav class="indice">
     <a href="#urgencia">Urgência e Emergência</a>
     <a href="#processos">Processos Terapêuticos I</a>
     <a href="#semiologia">Semiologia Médica I</a>
-  </div>
+  </nav>
 
-  <div id="urgencia" class="modulo">
+  <!-- MÓDULO 1: URGÊNCIA E EMERGÊNCIA -->
+  <section id="urgencia" class="modulo">
     <h2>Fundamentos da Urgência e Emergência</h2>
+
     <div class="unidade">
-      <label>1ª Avaliação Teórica (Peso 9): <input type="number" id="fu_u1_av1" value="0" min="0" max="10" step="0.1"></label>
-      <label>Teste de Progresso (Peso 1): <input type="number" class="teste-progresso" id="fu_u1_tp" value="0" min="0" max="10" step="0.1"></label>
+      <header><h3>Unidade I</h3></header>
+      <div class="grid">
+        <label>1ª Avaliação Teórica (Peso 9)
+          <input type="number" id="fu_u1_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="fu_u1_tp" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
     </div>
+
     <div class="unidade">
-      <label>2ª Avaliação Teórica (Peso 1): <input type="number" id="fu_u2_av1" value="0" min="0" max="10" step="0.1"></label>
+      <header><h3>Unidade II</h3></header>
+      <div class="grid">
+        <label>2ª Avaliação Teórica (Peso 1)
+          <input type="number" id="fu_u2_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
     </div>
+
     <div class="unidade">
-      <label>3ª Avaliação OSPE (Peso 8): <input type="number" id="fu_u3_ospe" value="0" min="0" max="10" step="0.1"></label>
-      <label>Atividades Processuais (Peso 2): <input type="number" id="fu_u3_proc" value="0" min="0" max="10" step="0.1"></label>
+      <header><h3>Unidade III</h3></header>
+      <div class="grid">
+        <label>3ª Avaliação OSPE (Peso 8)
+          <input type="number" id="fu_u3_ospe" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Atividades Processuais (Peso 2)
+          <input type="number" id="fu_u3_proc" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
     </div>
+
     <div class="unidade">
-      <label>4ª Avaliação Integrada (Peso 5): <input type="number" class="avaliacao-integrada" id="fu_u4_av1" value="0" min="0" max="10" step="0.1"></label>
-      <label>Atividades Processuais (Peso 5): <input type="number" id="fu_u4_proc" value="0" min="0" max="10" step="0.1"></label>
+      <header><h3>Unidade IV</h3></header>
+      <div class="grid">
+        <label>4ª Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="fu_u4_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Atividades Processuais (Peso 5)
+          <input type="number" id="fu_u4_proc" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
     </div>
-    <button class="calc-btn" onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('urgencia')">Calcular média Urgência e Emergência</button>
+      <button class="clear-btn" onclick="limparModulo('urgencia')">Limpar notas do módulo</button>
+    </div>
     <div class="resultado" id="fu_final"></div>
     <div class="resultado mensagem" id="fu_mensagem"></div>
-  </div>
+  </section>
+
+  <!-- MÓDULO 2: PROCESSOS TERAPÊUTICOS I -->
+  <section id="processos" class="modulo">
+    <h2>Processos Terapêuticos I</h2>
+
+    <div class="unidade">
+      <header><h3>Unidade I</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 9)
+          <input type="number" id="pt_u1_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="pt_u1_tp" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade II</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 8)
+          <input type="number" id="pt_u2_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Seminários (Peso 2)
+          <input type="number" id="pt_u2_sem" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade III</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (Peso 8)
+          <input type="number" id="pt_u3_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Seminários (Peso 2)
+          <input type="number" id="pt_u3_sem" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade IV</h3></header>
+      <div class="grid">
+        <label>Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="pt_u4_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Atividades Processuais (Peso 5)
+          <input type="number" id="pt_u4_proc" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('processos')">Calcular média Processos Terapêuticos I</button>
+      <button class="clear-btn" onclick="limparModulo('processos')">Limpar notas do módulo</button>
+    </div>
+    <div class="resultado" id="pt_final"></div>
+    <div class="resultado mensagem" id="pt_mensagem"></div>
+  </section>
+
+  <!-- MÓDULO 3: SEMIOLOGIA MÉDICA I -->
+  <section id="semiologia" class="modulo">
+    <h2>Semiologia Médica dos Sistemas I</h2>
+
+    <div class="unidade">
+      <header><h3>Unidade I</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (ANM e ECTO) (Peso 7)
+          <input type="number" id="sm_u1_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Seminário Laboratório (Peso 2)
+          <input type="number" id="sm_u1_sem" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Teste de Progresso (Peso 1)
+          <input type="number" class="teste-progresso" id="sm_u1_tp" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade II</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (AR e ACV) (Peso 7)
+          <input type="number" id="sm_u2_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Avaliação Prática Anamnese (Peso 3)
+          <input type="number" id="sm_u2_prat" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade III</h3></header>
+      <div class="grid">
+        <label>Avaliação Teórica (ABD e UR) (Peso 7)
+          <input type="number" id="sm_u3_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Práticas Supervisionadas (Peso 1)
+          <input type="number" id="sm_u3_prat" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Seminário Semiologia (Peso 2)
+          <input type="number" id="sm_u3_sem" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="unidade">
+      <header><h3>Unidade IV</h3></header>
+      <div class="grid">
+        <label>Avaliação Integrada (Peso 5)
+          <input type="number" class="avaliacao-integrada" id="sm_u4_av1" value="0" min="0" max="10" step="0.1" />
+        </label>
+        <label>Avaliação Prática OSCE (Peso 5)
+          <input type="number" id="sm_u4_osce" value="0" min="0" max="10" step="0.1" />
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="calc-btn" onclick="calcular('semiologia')">Calcular média Semiologia Médica I</button>
+      <button class="clear-btn" onclick="limparModulo('semiologia')">Limpar notas do módulo</button>
+    </div>
+    <div class="resultado" id="sm_final"></div>
+    <div class="resultado mensagem" id="sm_mensagem"></div>
+  </section>
 
   <script>
+    // Utilidades
+    const metaTheme = document.getElementById('theme-color-meta');
+    const themeToggle = document.getElementById('theme-toggle');
+
     function byId(id) { return document.getElementById(id); }
 
     function mediaPonderada(valoresPesos) {
       let somaPonderada = 0, somaPesos = 0;
       for (const vp of valoresPesos) {
         const v = Number(vp.valor);
-        somaPonderada += v * vp.peso;
-        somaPesos += vp.peso;
+        if (!Number.isNaN(v)) { somaPonderada += v * vp.peso; somaPesos += vp.peso; }
       }
       return somaPesos ? somaPonderada / somaPesos : 0;
     }
 
-    function calcularModulo(prefix, nome, unidades) {
-      const final = byId(prefix + '_final');
-      const mensagem = byId(prefix + '_mensagem');
-      const soma = unidades.reduce((a, b) => a + b, 0);
-      const preenchidas = unidades.filter(u => !isNaN(u)).length;
-      const mediaFinal = soma / 4;
-      if (preenchidas < 4 || mediaFinal === 0) {
-        const pontosNec = 7 * 4 - soma;
-        const restam = 4 - preenchidas;
-        final.innerText = '';
-        mensagem.innerText = `Média parcial: ${mediaFinal.toFixed(2)} | Faltam ${pontosNec.toFixed(2)} pontos para aprovação. Ainda restam ${restam} unidade(s) a avaliar.`;
+    function resumoAprovacao(unidades) {
+      // Considera preenchidas apenas as > 0 para efeito de parcial
+      let sumFilled = 0, filled = 0;
+      for (const u of unidades) {
+        const val = Number(u);
+        if (!Number.isNaN(val) && val > 0) { sumFilled += val; filled++; }
+      }
+      const target = 7 * 4; // 28
+      const pontosNec = Math.max(0, target - sumFilled);
+      const restantes = 4 - filled;
+      const mediaParcial = filled ? (sumFilled / filled) : 0;
+      return { mediaParcial, pontosNec, restantes, filled };
+    }
+
+    function calcularModulo(prefix, titulo, unidades) {
+      const finalEl = byId(prefix + '_final');
+      const msgEl = byId(prefix + '_mensagem');
+      const { mediaParcial, pontosNec, restantes, filled } = resumoAprovacao(unidades);
+
+      if (filled < 4) {
+        finalEl.innerText = '';
+        msgEl.innerText = `Média parcial: ${mediaParcial.toFixed(2)} | Faltam ${pontosNec.toFixed(2)} pontos para aprovação. Ainda restam ${restantes} unidade(s) a avaliar.`;
       } else {
-        mensagem.innerText = '';
-        final.innerText = `${nome}: ${mediaFinal.toFixed(2)}`;
+        const mediaFinal = (unidades.reduce((a,b)=>a+b,0)) / 4; // média simples das 4 unidades
+        msgEl.innerText = '';
+        finalEl.innerText = `Média Final ${titulo}: ${mediaFinal.toFixed(2)}`;
       }
     }
 
     function calcular(modulo) {
       if (modulo === 'urgencia') {
-        const fu_u1 = mediaPonderada([{valor:+fu_u1_av1.value, peso:9},{valor:+fu_u1_tp.value,peso:1}]);
-        const fu_u2 = +fu_u2_av1.value;
-        const fu_u3 = mediaPonderada([{valor:+fu_u3_ospe.value,peso:8},{valor:+fu_u3_proc.value,peso:2}]);
-        const fu_u4 = mediaPonderada([{valor:+fu_u4_av1.value,peso:5},{valor:+fu_u4_proc.value,peso:5}]);
-        calcularModulo('fu','Média Final Urgência e Emergência',[fu_u1,fu_u2,fu_u3,fu_u4]);
+        const fu_u1 = mediaPonderada([{valor: fu_u1_av1.value, peso: 9}, {valor: fu_u1_tp.value, peso: 1}]);
+        const fu_u2 = Number(fu_u2_av1.value) || 0;
+        const fu_u3 = mediaPonderada([{valor: fu_u3_ospe.value, peso: 8}, {valor: fu_u3_proc.value, peso: 2}]);
+        const fu_u4 = mediaPonderada([{valor: fu_u4_av1.value, peso: 5}, {valor: fu_u4_proc.value, peso: 5}]);
+        calcularModulo('fu', 'Urgência e Emergência', [fu_u1, fu_u2, fu_u3, fu_u4]);
+      }
+      if (modulo === 'processos') {
+        const pt_u1 = mediaPonderada([{valor: pt_u1_av1.value, peso: 9}, {valor: pt_u1_tp.value, peso: 1}]);
+        const pt_u2 = mediaPonderada([{valor: pt_u2_av1.value, peso: 8}, {valor: pt_u2_sem.value, peso: 2}]);
+        const pt_u3 = mediaPonderada([{valor: pt_u3_av1.value, peso: 8}, {valor: pt_u3_sem.value, peso: 2}]);
+        const pt_u4 = mediaPonderada([{valor: pt_u4_av1.value, peso: 5}, {valor: pt_u4_proc.value, peso: 5}]);
+        calcularModulo('pt', 'Processos Terapêuticos I', [pt_u1, pt_u2, pt_u3, pt_u4]);
+      }
+      if (modulo === 'semiologia') {
+        const sm_u1 = mediaPonderada([{valor: sm_u1_av1.value, peso: 7}, {valor: sm_u1_sem.value, peso: 2}, {valor: sm_u1_tp.value, peso: 1}]);
+        const sm_u2 = mediaPonderada([{valor: sm_u2_av1.value, peso: 7}, {valor: sm_u2_prat.value, peso: 3}]);
+        const sm_u3 = mediaPonderada([{valor: sm_u3_av1.value, peso: 7}, {valor: sm_u3_prat.value, peso: 1}, {valor: sm_u3_sem.value, peso: 2}]);
+        const sm_u4 = mediaPonderada([{valor: sm_u4_av1.value, peso: 5}, {valor: sm_u4_osce.value, peso: 5}]);
+        calcularModulo('sm', 'Semiologia Médica dos Sistemas I', [sm_u1, sm_u2, sm_u3, sm_u4]);
       }
     }
 
-    // Sincronização de campos entre módulos
-    document.querySelectorAll('.avaliacao-integrada').forEach(el => {
-      el.addEventListener('input', e => {
-        const val = e.target.value;
-        document.querySelectorAll('.avaliacao-integrada').forEach(i => i.value = val);
+    function limparModulo(moduloId) {
+      const container = document.getElementById(moduloId);
+      container.querySelectorAll('input[type="number"]').forEach(i => i.value = '0');
+      if (moduloId === 'urgencia') { byId('fu_final').innerText = ''; byId('fu_mensagem').innerText = ''; }
+      if (moduloId === 'processos') { byId('pt_final').innerText = ''; byId('pt_mensagem').innerText = ''; }
+      if (moduloId === 'semiologia') { byId('sm_final').innerText = ''; byId('sm_mensagem').innerText = ''; }
+    }
+
+    // Sincronização entre módulos
+    function syncByClass(cls) {
+      document.querySelectorAll('.' + cls).forEach(el => {
+        el.addEventListener('input', e => {
+          const val = e.target.value;
+          document.querySelectorAll('.' + cls).forEach(i => { if (i !== e.target) i.value = val; });
+        });
       });
-    });
+    }
+    syncByClass('avaliacao-integrada');
+    syncByClass('teste-progresso');
 
-    document.querySelectorAll('.teste-progresso').forEach(el => {
-      el.addEventListener('input', e => {
-        const val = e.target.value;
-        document.querySelectorAll('.teste-progresso').forEach(i => i.value = val);
-      });
-    });
-
-    // Alternância manual de modo claro/escuro
-    const toggleButton = document.getElementById('theme-toggle');
-    const metaTheme = document.getElementById('theme-color-meta');
-
+    // Tema: automático + manual
     function applyTheme(dark) {
       if (dark) {
         document.body.classList.add('dark');
         metaTheme.setAttribute('content', '#0b1220');
         localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '🌙 Modo Escuro Ativo — Alternar';
       } else {
         document.body.classList.remove('dark');
         metaTheme.setAttribute('content', '#f9fafb');
         localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '🌞 Modo Claro Ativo — Alternar';
       }
     }
-
-    // Detecta preferência do sistema e estado salvo
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) applyTheme(savedTheme === 'dark');
-    else applyTheme(systemDark);
-
-    toggleButton.addEventListener('click', () => {
-      const dark = !document.body.classList.contains('dark');
-      applyTheme(dark);
-    });
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const saved = localStorage.getItem('theme');
+    if (saved) applyTheme(saved === 'dark'); else applyTheme(systemDark.matches);
+    systemDark.addEventListener('change', (e) => { if (!localStorage.getItem('theme')) applyTheme(e.matches); });
+    themeToggle.addEventListener('click', () => applyTheme(!document.body.classList.contains('dark')));
   </script>
 </body>
 </html>
